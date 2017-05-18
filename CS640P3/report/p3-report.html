@@ -1,0 +1,168 @@
+
+<html>
+<head>
+<title> CS440/640 Homework: HW[3] Student Name [Chen Shou]  </title>
+<style>
+<!--
+body{
+font-family: 'Trebuchet MS', Verdana;
+}
+p{
+font-family: 'Trebuchet MS', Times;
+margin: 10px 10px 15px 20px;
+}
+h3{
+margin: 5px;
+}
+h2{
+margin: 10px;
+}
+h1{
+margin: 10px 0px 0px 20px;
+}
+div.main-body{
+align:center;
+margin: 30px;
+}
+hr{
+margin:20px 0px 20px 0px;
+}
+-->
+</style>
+</head>
+
+<body>
+<center>
+<a href="http://www.bu.edu"><img border="0" src="http://www.cs.bu.edu/fac/betke/images/bu-logo.gif"
+width="119" height="120"></a>
+</center>
+
+<h1>Programming Assignment 3: Game AI</h1>
+<p> 
+ CS 640 P3 <br>
+ Zhongli Cao<br>
+ Lu Min, Chen Shou<br>
+    April 26, 2017 
+</p>
+
+<div class="main-body">
+<hr>
+<h2> Problem Definition </h2>
+<p>
+ <b>Current problem:</b> In the paper of this assignment, there is a description of a chess game, called atropos. We need design an algorithm to win the game.<br><br>
+ <b>Difficulties:</b><br> 
+ 1. We need choose a suitable algorithm for this problem. Both Minimax and Alpha-Beta algorithms can be applied to this problem.<br>
+ 2. Whether we choose Minimax or Alpha-Beta, we need to find a way to evaluation each move we make.<br><br>
+ 
+ <b>Assumptions:</b> In this program assignment, we need find an algorithm to win the game which is descriped in the assignment. The algorithms we can choose are Minimax algorithm and Alpha-Beta algorithm. However, for each of these two algorithms, we need design an evaluation algorithm. The evaluation algorithm is the key point of this project. A good evaluation algorithm not only can help us to have a higher probability to win the game, but also can decrease the running time.
+</p>
+
+<hr>
+<h2> Method and Implementation </h2>
+<p> In order to compare these two algorithm, we implement them all. Then, we can choose the better one.<br>
+<h3> &nbsp;&nbsp;The Minimax Algorithm</h3>
+<p> Minimax is a kind of backtracking algorithm that is used in decision making and game theory to find the optimal move for a player, assuming that your opponent also plays optimally. In Minimax the two players are called maximizer and minimizer. The maximizer tries to get the highest score possible while the minimizer tries to get the lowest score possible while minimizer tries to do opposite. However, there is a disadvantage of this method. The disadvantage is that the step we need compute will increase rapidly with the increasing of the level. Thus, we can optimize the minimax algorithm with pruning.<br>
+<figure>
+<center>
+<img src="WechatIMG1.jpeg" width="40%">
+<figcaption style="font-size: 14px">Figure 1: Pruning Example of Minimax Algorithm</figcaption>
+</center>
+ </figure>
+</p>
+<h3> &nbsp;&nbsp;Alpha-beta Pruning</h3>
+<p> Alpha-Beta pruning is not actually a new algorithm, rather an optimization technique for minimax algorithm. It reduces the computation time by a huge factor. This allows us to search much faster and even go into deeper levels in the game tree. It cuts off branches in the game tree which need not be searched because there already exists a better move available. It is called Alpha-Beta pruning because it passes 2 extra parameters in the minimax function, namely alpha and beta. We follow the pseudo code below in the figure 2 to implement alpha-beta pruning.
+<figure>
+<center>
+<img src="WechatIMG2.jpeg" width="50%">
+<figcaption style="font-size: 14px">Figure 2: Alpha-beta Pruning Pseudo Code</figcaption>
+</center>
+ </figure>
+</p>
+</p>
+
+<p>
+<h3> &nbsp;&nbsp;Evaluation Methods</h3>
+<p>
+The evaluation method help us evaluate the score of each move. If a move is a good move, then it will get a high score based on the evaluation method. The evaluation method we use is concluded by our experience. After we make a play, the number of playable moves left for the opponent can be used as a factor to evaluate the move. In our code, the more playable move remained for the opponent, the lower score for the move. 
+</p>
+</p>
+
+
+<hr>
+<h2>Experiments</h2>
+<p>
+First, we have three players playing against default player and each other, and we get the results in table 1. Every score in this table is based on a ten-round tournament between player in each row and player in each column. 
+<figure>
+<center>
+<img src="WechatIMG3.jpeg" width="60%">
+<figcaption style="font-size: 14px">Table 1: Ten-round Tournament Scores</figcaption>
+</center>
+ </figure>
+</p>
+<p>
+Then during our own tournament, we found that chenshouPlayer and PlayerCao are relatively stable and have better performance. And when they play against each other, chenshouPlayer performs better in even number of board size, PlayerCao performs better in odd number of size. So we decide to combine their advantages, when the number of board size is even, we choose chenshouPlayer; when the number of size is odd, we implement PlayerCao. After that we get the player ThreeRookie, it improves a lot comparing to our original three player.
+</p>
+
+
+<hr>
+<h2> Results</h2>
+<p>
+Using the ThreeRookie, we can get the following results.
+<figure>
+<center>
+<img src="vsRandom.png" width="60%">
+<figcaption style="font-size: 14px">Figure 1: ThreeRookie vs Random</figcaption>
+</center>
+ </figure>
+
+<figure>
+<center>
+<img src="vsPlayerCao.png" width="60%">
+<figcaption style="font-size: 14px">Figure 2: ThreeRookie vs PlayerCao</figcaption>
+</center>
+ </figure>
+
+ <figure>
+<center>
+<img src="vsChenshou.png" width="60%">
+<figcaption style="font-size: 14px">Figure 3: ThreeRookie vs chenshouPlayer</figcaption>
+</center>
+ </figure>
+</p>
+
+<p>
+
+<hr>
+<h2> Discussion </h2>
+
+<p> 
+<b> Strengths:</b> We implemented both minimax and alpha-beta algorithm to get a better option for our final algorithm after comparing the performance of the two algorithms.<br> 
+<b> Weakness:</b> The evaluation method we choose has a big flaw. The flaw is that choosing a move that makes the opponent has less move to choose will result in less move for us to choose after the opponent make next move.<br>
+<b> Potential future work:</b> We will play the game by ourselves, then find some little tricks for the game. After that we can have a better knowledge for this game, which can help us to figure out a better evaluation strategy.
+</p>
+
+<hr>
+<h2> Conclusions </h2>
+<p>
+We find that the alpha-beta pruning has much less running time than the minimax algorithm.<br>
+We find for this game, the bigger size of board, the better result we can get based on our algorithm. 
+</p>
+
+
+<hr>
+<h2> Credits and Bibliography </h2>
+<p>
+<li> Minimax algorithm from <a href="https://en.wikipedia.org/wiki/Minimax">Wiki</a>.</li>
+<li> Alpha-beta pruning from <a href="https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning">Wiki</a>.</li>
+<li> Basic concepts of game tree search in this <a href="https://www.cs.umd.edu/users/nau/game-theory/4%20Game-tree%20search.pdf">pdf file</a>.</li>
+<li> Some implementation <a href="https://github.com/dmlap/CS640-P4">examples</a></li>
+</p>
+
+
+<hr>
+</div>
+</body>
+
+
+
+</html>
